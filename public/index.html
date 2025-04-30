@@ -20,7 +20,7 @@
       const data = await res.json();
 
       Object.keys(data).forEach(id => {
-        const { lat, lon } = data[id];
+        const { latitude, longitude } = data[id];
 
         const obj = data[id];
         console.log("eeeeeeee");
@@ -33,9 +33,9 @@
 
 
         if (markers[id]) {
-          markers[id].setLatLng([lat, lon]);
+          markers[id].setLatLng([latitude, longitude]);
         } else {
-          markers[id] = L.marker([lat, lon]).addTo(map).bindPopup(popupContent);
+          markers[id] = L.marker([latitude, longitude]).addTo(map).bindPopup(popupContent);
         }
       });
     }
