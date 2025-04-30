@@ -19,10 +19,10 @@
       const res = await fetch('/api/positions');
       const data = await res.json();
 
-      Object.keys(data).forEach(id => {
-        const { latitude, longitude } = data[id];
+      Object.keys(data).forEach(ssid => {
+        const { latitude, longitude } = data[ssid];
 
-        const obj = data[id];
+        const obj = data[ssid];
         console.log("eeeeeeee");
         let popupContent = '';
         console.log(obj);
@@ -32,10 +32,10 @@
         });
 
 
-        if (markers[id]) {
-          markers[id].setLatLng([latitude, longitude]);
+        if (markers[ssid]) {
+          markers[ssid].setLatLng([latitude, longitude]);
         } else {
-          markers[id] = L.marker([latitude, longitude]).addTo(map).bindPopup(popupContent);
+          markers[ssid] = L.marker([latitude, longitude]).addTo(map).bindPopup(popupContent);
         }
       });
     }

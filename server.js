@@ -8,11 +8,11 @@ app.use(express.static('public'));
 const positions = {};
 
 app.post('/api/position', (req, res) => {
-  const { id, latitude, longitude } = req.body;
-  if (!id || !latitude || !longitude) {
+  const { ssid, latitude, longitude } = req.body;
+  if (!ssid || !latitude || !longitude) {
     return res.status(400).json({ message: 'Invalid data' });
   }
-  positions[id] = { ...req.body };
+  positions[ssid] = { ...req.body };
   res.json({ message: 'Position enregistrée' });
 });
 
