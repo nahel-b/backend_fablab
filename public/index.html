@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>POC dashboard</title>
+  <meta charset="utf-8" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+  <style> #map { height: 100vh; } </style>
+</head>
+<body>
+  <div id="map"></div>
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+  <script>
+    const map = L.map('map').setView([0, 0], 2);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
+
+    const markers = {};
+
+    async function fetchPositions() {
+      const res = await fetch('/api/positions');
+      const data = await res.json();
+
+      Object.keys(data).forEach(id => {
+        const { lat, lon } = data[id];
+
+        const obj = data[id];
+        console.log("eeeeeeee");
+        let popupContent = '';
+        console.log(obj);
+        Object.entries(obj).forEach(([key, value]) => {
+          popupContent += `<b>${key}</b>: ${value}<br/>`;
+          console.log(key, value);
+        });
+
+
+        if (markers[id]) {
+          markers[id].setLatLng([lat, lon]);
+        } else {
+          markers[id] = L.marker([lat, lon]).addTo(map).bindPopup(popupContent);
+        }
+      });
+    }
+
+    setInterval(fetchPositions, 3000);
+    fetchPositions();
+  </script>
+</body>
+</html>
