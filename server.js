@@ -20,6 +20,12 @@ app.get('/api/positions', (req, res) => {
   res.json(positions);
 });
 
+app.post('/api/reset', (req, res) => {
+  Object.keys(positions).forEach((key) => delete positions[key]);
+  res.json({ message: 'Positions réinitialisées' });
+});
+
+
 app.listen(port, () => {
   console.log(`Serveur en ligne sur http://localhost:${port}`);
 });
